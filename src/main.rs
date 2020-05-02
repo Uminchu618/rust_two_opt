@@ -1,3 +1,4 @@
+mod plot;
 use rand::prelude::*;
 use std::error::Error;
 use std::fs::File;
@@ -6,7 +7,6 @@ use std::io::{BufRead, BufReader};
 const FILE_NAME: &str = "burma14.tsp";
 
 #[derive(Debug)]
-#[derive(Clone)]
 struct Node {
     id: i32,
     x: f64,
@@ -20,6 +20,8 @@ fn main() -> Result<(), Box<dyn Error>> {
     hillclimb(&mut route,1000000);
     println!("{:?}", route);
     println!("{:?}", total_distance(&route));
+    let plot_vec =  route.iter().map(|item| (item.x as f32 ,item.y as f32)).collect();
+    plot::plot_route(plot_vec);
     Ok(())
 }
 
