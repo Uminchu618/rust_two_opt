@@ -1,8 +1,8 @@
 use plotters::prelude::*;
 
-pub fn plot_route(route: Vec<(f32,f32)>) -> Result<(), Box<dyn std::error::Error>> {
+pub fn plot_route(route: &Vec<(f32,f32)>) -> Result<(), Box<dyn std::error::Error>> {
     let root = BitMapBackend::new("6.png", (640, 480)).into_drawing_area();
-    root.fill(&WHITE);
+    root.fill(&WHITE)?;
     let root = root.margin(10, 10, 10, 10);
     // After this point, we should be able to draw construct a chart context
     let mut chart = ChartBuilder::on(&root)
@@ -12,7 +12,7 @@ pub fn plot_route(route: Vec<(f32,f32)>) -> Result<(), Box<dyn std::error::Error
         .x_label_area_size(20)
         .y_label_area_size(40)
         // Finally attach a coordinate on the drawing area and make a chart context
-        .build_ranged(0f32..10f32, 0f32..10f32)?;
+        .build_ranged(10f32..30f32, 90f32..100f32)?;
 
     // Then we can draw a mesh
     chart
@@ -26,12 +26,12 @@ pub fn plot_route(route: Vec<(f32,f32)>) -> Result<(), Box<dyn std::error::Error
 
     // And we can draw something in the drawing area
     chart.draw_series(LineSeries::new(
-        route,
+        route.clone(),
         &RED,
     ))?;
     // Similarly, we can draw point series
     chart.draw_series(PointSeries::of_element(
-        route,
+        route.clone(),
         5,
         &RED,
         &|c, s, st| {

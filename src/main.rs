@@ -21,7 +21,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     println!("{:?}", route);
     println!("{:?}", total_distance(&route));
     let plot_vec =  route.iter().map(|item| (item.x as f32 ,item.y as f32)).collect();
-    plot::plot_route(plot_vec);
+    plot::plot_route(&plot_vec)?;
     Ok(())
 }
 
