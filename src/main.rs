@@ -14,10 +14,12 @@ struct Node {
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let route = read_input_file()?;
+    let mut route = read_input_file()?;
     println!("{:?}", route);
     println!("{:?}", total_distance(&route));
-    hillclimb(route,1000000);
+    hillclimb(&mut route,1000000);
+    println!("{:?}", route);
+    println!("{:?}", total_distance(&route));
     Ok(())
 }
 
@@ -38,7 +40,7 @@ fn total_distance(route: &Vec<Node>) -> f64 {
 /// 山登り法による経路の最適化
 ///   route: 初期経路
 ///   maxIterations: 繰り返し回数
-fn hillclimb(mut route: Vec<Node>, max_iterations: i32) {
+fn hillclimb(route: &mut Vec<Node>, max_iterations: i32) {
     let node_count = route.len();
     let mut rng = rand::thread_rng();
     for _current_iterations in 0..max_iterations {
@@ -51,8 +53,6 @@ fn hillclimb(mut route: Vec<Node>, max_iterations: i32) {
             route.swap(rand_index1, rand_index2);
         }
     }
-    println!("{:?}", total_distance(&route));
-    println!("{:?}", route);
 }
 
 fn read_input_file() -> Result<Vec<Node>, Box<dyn Error>> {
