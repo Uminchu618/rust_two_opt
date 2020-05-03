@@ -1,7 +1,11 @@
 use crate::Node;
 use plotters::prelude::*;
 
-pub fn plot_route(route: &Vec<Node>, path: &str) -> Result<(), Box<dyn std::error::Error>> {
+pub fn plot_route(
+    route: &Vec<Node>,
+    path: &str,
+    title: &str,
+) -> Result<(), Box<dyn std::error::Error>> {
     let root = BitMapBackend::new(path, (640, 480)).into_drawing_area();
     root.fill(&WHITE)?;
     let root = root.margin(10, 10, 10, 10);
@@ -16,7 +20,7 @@ pub fn plot_route(route: &Vec<Node>, path: &str) -> Result<(), Box<dyn std::erro
     // After this point, we should be able to draw construct a chart context
     let mut chart = ChartBuilder::on(&root)
         // Set the caption of the chart
-        .caption("This is our first plot", ("sans-serif", 40).into_font())
+        .caption(title, ("sans-serif", 40).into_font())
         // Set the size of the label region
         .x_label_area_size(20)
         .y_label_area_size(40)

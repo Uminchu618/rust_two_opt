@@ -7,7 +7,7 @@ use std::io::{BufRead, BufReader};
 
 const FILE_NAME: &str = "att48.tsp";
 
-#[derive(Debug,Clone,Copy)]
+#[derive(Debug, Clone, Copy)]
 pub struct Node {
     pub id: i32,
     pub x: f64,
@@ -18,17 +18,17 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut rng = rand::thread_rng();
     let mut route = read_input_file()?;
     println!("random {:?}", total_distance(&route));
-    plot::plot_route(&route, "random.png")?;
+    plot::plot_route(&route, "random.png", "random")?;
     nearest_neighbor(&mut route, &mut rng);
     println!("nearest_neighbor {:?}", total_distance(&route));
-    plot::plot_route(&route, "nearest_neighbor.png")?;
+    plot::plot_route(&route, "nearest_neighbor.png", "nearest neighbor")?;
     let mut nr_route = route.clone();
     hillclimb(&mut route, 100000, &mut rng);
     println!("hillclimb {:?}", total_distance(&route));
-    plot::plot_route(&route, "hillclimb.png")?;
+    plot::plot_route(&route, "hillclimb.png", "hillclimb")?;
     two_opt(&mut nr_route, 100000);
     println!("two_opt {:?}", total_distance(&nr_route));
-    plot::plot_route(&nr_route, "two_opt.png")?;
+    plot::plot_route(&nr_route, "two_opt.png", "two opt")?;
     Ok(())
 }
 
